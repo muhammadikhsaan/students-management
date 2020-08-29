@@ -8,6 +8,7 @@ import (
 
 type StudentsInterface interface {
 	InsertStudent(*model.StudentModel) (sql.Result, error)
+	UpdateStudent(*model.StudentModel) (sql.Result, error)
 }
 
 type studentRepository struct {
@@ -37,4 +38,20 @@ func (s studentRepository) InsertStudent(d *model.StudentModel) (sql.Result, err
 	}
 
 	return result, nil
+}
+
+func (s studentRepository) UpdateStudent(d *model.StudentModel) (sql.Result, error) {
+	rsl, err := s.db.PrepareContext(s.ctx, "update student set name=?, age=? where id=?;")
+
+	if err != nil {
+		return nil, err
+	}
+
+	_, errs := rsl.ExecContext(s.ctx, d.Name, d.Age, d.ID)
+
+	if errs != nil {
+		return nil, err
+	}
+
+	return nil, nil
 }
