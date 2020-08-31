@@ -1,10 +1,10 @@
 package endpoint
 
 import (
-	"ZebraX/apps/base/model"
-	"ZebraX/apps/base/repository"
-	"ZebraX/apps/config"
-	"ZebraX/apps/services"
+	"ZebraX/base/model"
+	"ZebraX/base/repository"
+	"ZebraX/config"
+	"ZebraX/services"
 	"context"
 	"net/http"
 	"strconv"

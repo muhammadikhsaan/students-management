@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ZebraX/apps/base/endpoint"
-	"ZebraX/apps/config"
+	"ZebraX/base/endpoint"
+	"ZebraX/config"
 	"io"
 	"log"
 	"os"
@@ -15,10 +15,10 @@ var (
 )
 
 func init() {
-	l, _ := os.Create("logger/logger__request.log")
+	l, _ := os.Create("../logger/logger__request.log")
 	l.Chmod(644)
 
-	s, _ := os.Create("logger/logger__request-recovery.log")
+	s, _ := os.Create("../logger/logger__request-recovery.log")
 	s.Chmod(644)
 
 	var (
@@ -30,10 +30,6 @@ func init() {
 }
 
 func main() {
-	log.Fatal(serverHandle().Run(config.APPLICATIONPORT))
-}
-
-func serverHandle() *gin.Engine {
 	v1 := r.Group("/", endpoint.ValidationRequest)
 	{
 		v1.POST("/student", endpoint.InsertStudentEndpoint)
@@ -42,5 +38,5 @@ func serverHandle() *gin.Engine {
 		v1.DELETE("/student/:id", endpoint.DeleteStudentEndpoint)
 	}
 
-	return r
+	log.Fatal(r.Run(config.APPLICATIONPORT))
 }

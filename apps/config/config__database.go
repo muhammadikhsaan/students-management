@@ -13,7 +13,7 @@ var databases *sql.DB
 func Getdatabase() *sql.DB {
 	if databases == nil {
 		var connection = Getenv("DB_USER") + ":" + Getenv("DB_PASS") + "@tcp(" + Getenv("DB_HOST") + ")/" + Getenv("DB_NAME")
-		db, err := sql.Open(Getenv("Database"), connection)
+		db, err := sql.Open(Getenv("DB"), connection)
 		err = db.Ping()
 		if err != nil {
 			log.Fatal(err)

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"ZebraX/apps/base/model"
+	"ZebraX/base/model"
 	"context"
 	"database/sql"
 )

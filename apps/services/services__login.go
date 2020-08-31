@@ -1,7 +1,7 @@
 package services
 
 import (
-	"ZebraX/apps/config"
+	"ZebraX/config"
 	"crypto/md5"
 	"encoding/hex"
 
