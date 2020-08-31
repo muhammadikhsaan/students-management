@@ -46,12 +46,12 @@ A simple apps rest API with golang-gin
 	## Setup instructions
 		* Database
 			* Create a database.
-			* Import the zebrax.sql file in the Database folder into the database used.
+			* Import the zebrax.sql file in the Database directory into the database used.
 			* Entry database driver, database user, database password, database host dan database name into the .env file
 		* Application
 			* run go mod tidy on terminal/command line to add missing modules
 		* Running
-			* go to apps folder
+			* go to apps directory
 			* run go run main.go on erminal/command line to running the application
 		* Testing With Postman
 			* Import ZebraX Testing file on Postman directory to postman apps
@@ -61,7 +61,7 @@ A simple apps rest API with golang-gin
 			* Go to body navigation and select raw body
 			* Insert body data in json format
 		* Testing With Golang Test
-			* Go to apps folder
+			* Go to apps directory
 			* Run go test -v
 			* Custom variable testArray value on test function
 	## Application Deployment
