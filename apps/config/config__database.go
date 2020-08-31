@@ -1,8 +1,8 @@
 package config
 
 import (
-	"ZebraX/apps/handle"
 	"database/sql"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -12,9 +12,12 @@ var databases *sql.DB
 //Getdatabase is init database connection
 func Getdatabase() *sql.DB {
 	if databases == nil {
-		db, err := sql.Open(Getenv("Database"), Getenv("Connection"))
+		var connection = Getenv("DB_USER") + ":" + Getenv("DB_PASS") + "@tcp(" + Getenv("DB_HOST") + ")/" + Getenv("DB_NAME")
+		db, err := sql.Open(Getenv("Database"), connection)
 		err = db.Ping()
-		handle.ErrorHandle(err)
+		if err != nil {
+			log.Fatal(err)
+		}
 		databases = db
 	}
 	return databases

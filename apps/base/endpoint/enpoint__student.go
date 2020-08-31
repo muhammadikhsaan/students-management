@@ -42,7 +42,7 @@ func ValidationRequest(c *gin.Context) {
 	}
 }
 
-//InsertStudentEndpoint to handle request POST to add students
+//InsertStudentEndpoint to handle request POST to add student
 func InsertStudentEndpoint(c *gin.Context) {
 	var request model.StudentModel
 
@@ -51,17 +51,24 @@ func InsertStudentEndpoint(c *gin.Context) {
 		return
 	}
 
-	_, err := student.InsertStudent(&request)
+	result, err := student.InsertStudent(&request)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H{})
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": err.Error()})
+		return
+	}
+
+	_, errs := result.RowsAffected()
+
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errs.Error()})
 		return
 	}
 
 	c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Success Insert Student"})
 }
 
-//PutStudentEndpoint to handle request PUT to change/update students
+//PutStudentEndpoint to handle request PUT to change/update student
 func PutStudentEndpoint(c *gin.Context) {
 	var request model.StudentModel
 
@@ -78,12 +85,80 @@ func PutStudentEndpoint(c *gin.Context) {
 	}
 
 	request.ID = id
-	_, err = student.UpdateStudent(&request)
+	result, errs := student.UpdateStudent(&request)
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H{})
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errs.Error()})
 		return
 	}
 
-	c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Success Update Student"})
+	row, errss := result.RowsAffected()
+
+	if errss != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errss.Error()})
+		return
+	}
+
+	if row == 0 {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Failed to Update Data"})
+		return
+	}
+
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Success Update Student with ID " + c.Param("id")})
+}
+
+//GetStudentEndpoint to handle request GET to select student
+func GetStudentEndpoint(c *gin.Context) {
+	var request model.StudentModel
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	request.ID = id
+	result, errs := student.SelectStudent(&request)
+
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errs.Error()})
+		return
+	}
+
+	c.AbortWithStatusJSON(http.StatusOK, result)
+}
+
+//DeleteStudentEndpoint to handle request delete to delete student
+func DeleteStudentEndpoint(c *gin.Context) {
+	var request model.StudentModel
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	request.ID = id
+	result, errs := student.DeleteStudent(&request)
+
+	if errs != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errs.Error()})
+		return
+	}
+
+	row, errss := result.RowsAffected()
+
+	if errss != nil {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": errss.Error()})
+		return
+	}
+
+	if row == 0 {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Failed to Delete Data"})
+		return
+	}
+
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{"message": "Success Delete Student with ID " + c.Param("id")})
 }

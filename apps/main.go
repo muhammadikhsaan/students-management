@@ -30,13 +30,17 @@ func init() {
 }
 
 func main() {
+	log.Fatal(serverHandle().Run(config.APPLICATIONPORT))
+}
+
+func serverHandle() *gin.Engine {
 	v1 := r.Group("/", endpoint.ValidationRequest)
 	{
 		v1.POST("/student", endpoint.InsertStudentEndpoint)
 		v1.PUT("/student/:id", endpoint.PutStudentEndpoint)
-		v1.GET("/student/:id")
-		v1.DELETE("/student/:id")
+		v1.GET("/student/:id", endpoint.GetStudentEndpoint)
+		v1.DELETE("/student/:id", endpoint.DeleteStudentEndpoint)
 	}
 
-	log.Fatal(r.Run(config.APPLICATIONPORT))
+	return r
 }

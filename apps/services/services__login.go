@@ -39,8 +39,8 @@ func (s *loginService) GenerateAccessToken() (string, error) {
 }
 
 //GenerateHashing be used for hanshing Password
-func GenerateHashing(password string, n int) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(EncryptionWithMD5(password)), n)
+func GenerateHashing(str string, n int) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(EncryptionWithMD5(str)), n)
 	return string(bytes), err
 }
 
