@@ -27,19 +27,6 @@ A simple apps rest API with golang-gin
 
 ---------------------------------------
 
-## Directory structure.
-
--apps
---base
----endpoint
----model
----repository
---config
---services
--logger
-
----------------------------------------
-
 ## Setup
 	## Setup instructions
 		* Database
