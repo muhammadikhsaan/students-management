@@ -1,5 +1,3 @@
-#Zebrax BE Interview Test
-
 A simple apps rest API with golang-gin
 
 ---------------------------------------
