@@ -1,4 +1,4 @@
-module https://github.com/muhammadikhsaan/students-management/branches
+module github.com/muhammadikhsaan/students-management
 
 go 1.15
 
