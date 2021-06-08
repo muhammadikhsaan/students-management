@@ -1,4 +1,4 @@
-module ZebraX
+module https://github.com/muhammadikhsaan/students-management/branches
 
 go 1.15
 
